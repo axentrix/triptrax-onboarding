@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    
+    <title>Triptrax</title>  
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+
+
+    
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+.progress-container {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  padding: 10px 0;
+  cursor: pointer;
+  justify-content:center;
+  flex:1 0 100%;
+  position:absolute;
+  z-index:8;
+}
+.mini-container{
+  display:flex;
+  flex-grow: 1;
+  height:24px;
+}
+.progress {
+  height: 2px !important;
+  flex-grow: 1;
+  border-radius: 4px;
+  margin: 0 5px;
+  display: flex;
+  background-image: -webkit-linear-gradient(left, 
+    rgba(255,255,255,.5) 0%,
+    rgba(255,255,255,.5) 50%,
+    rgba(88, 89, 104,.5) 50.001%,
+    rgba(88, 89, 104,.5) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200%;
+  background-color: #666;
+  background-position: 100% 50%;
+  animation-timing-function: linear;
+  animation-delay: .2s;
+}
+
+.progress.active {
+    animation-name: Loader;
+}
+
+.progress.passed {
+    background-position: 0 0; 
+}
+
+@-webkit-keyframes Loader {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+.pause{display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:0;
+  padding:0;
+}
+
+.paused .progress {
+animation-play-state: paused;
+}
+
+.pause .not-hovered {
+  display: flex;
+  color:#fff;
+}
+.pause .hovered {
+  display: none;
+}
+
+.pause:hover .not-hovered {
+  display: none;
+}
+.pause:hover .hovered {
+  display: flex;
+}
+
+body {
+  background: linear-gradient(180deg, #002337 10.84%, #006DAB 51.56%, #0C608E 100%);
+  margin:0;
+  padding:0;
+overflow:hidden;
+height:100vh;
+
+  width: 100vw;
+  color: #fff;
+  font-family: "Inter";
+}
+.d-none{
+  display:none;
+}
+.d-flex{
+  display:flex;
+}
+
+.title {
+
+  display:flex;
+
+}
+
+
+
+.title h2{
+  color:#fff;
+  font-size:3vmax;
+display:flex;
+flex-wrap:wrap;
+margin:0;
+padding:0;
+}
+svg { transform: unset !important; }
+title h2 span{
+  color:#fff;
+  font-size:24px !important;
+  font-weight:normal;
+}
+
+#container{
+
+  position:relative;
+  top:0;
+ left:0;
+  top:0;
+
+  height:100vh;
+  width:100vw;
+}
+.d-flex{
+  display:flex !important;
+  opacity:1 !important;
+  transition:all 0.6s;
+}
+
+.title{
+  margin-top:4rem;
+align-items:center;
+
+  display:flex;
+ 
+  width:80vw;
+}
+
+.title div{
+
+  display:flex;
+  flex-direction:column;
+}
+.activediv{
+ 
+display:flex;
+  position:absolute;
+  justify-content:center;
+  z-index:5;
+  width:100vw;
+  height:20vh;
+ opacity:0;
+}
+.title img{
+height:90px;
+
+}
+
+.d-none{transition:all 0.6s;
+  opacity:0;
+}
+body.loaded .loader{
+  opacity:0;
+
+}
+body.loaded .loader #lottieload{
+  display:none;
+}
+body.loading .loader{  opacity:1;
+  z-index:99999;
+position:fixed;
+background:#002337;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:all 0.4s;
+}
+#lottieload{
+  display:flex;
+  width:100px;
+  height:100px;
+}
+</style>
+</head>
+<body class="loading"><div class="loader">
+  <div id="lottieload">
+   
+  </div></div>
+
+  <div class="pause">
+    <div class="progress-container">
+      <div class="mini-container"  data-slide="1"><div style="animation-duration: 6s" class="progress active"></div> </div>
+      <div class="mini-container"  data-slide="2"><div style="animation-duration: 6s" class="progress"></div> </div>
+      <div class="mini-container"  data-slide="3"><div style="animation-duration: 4s" class="progress"></div> </div>
+      <div class="mini-container"  data-slide="4"><div style="animation-duration: 6s" class="progress"></div> </div>
+    </div>
+    
+  <div class="activediv d-flex" data-slide="1"><div class="title"><img src="images/logo_onboarding.png"><div><h2>Travelog your trips</h2><span>Upload photos and see them mapped on timeline and globe.</span></div></div></div>
+  <div class="activediv" data-slide="2"><div class="title" ><img src="images/logo_onboarding.png"><div><h2>Create a Trip Wish List</h2><span>Plan your future travels and bookmark your goals.</span></div></div></div>
+  <div class="activediv" data-slide="3"><div class="title"><img src="images/logo_onboarding.png"><div><h2>How much a hamburger?</h2><span>Check out accurate and up to date exchange rates in any currency.</span></div></div></div>
+  <div class="activediv" data-slide="4"><div class="title"><img src="images/logo_onboarding.png"><div><h2>Conquer the World</h2><span>Collect badges and medals for all your travels</span></div></div></div>
+
+    <div id="container" class="container"></div>
+   <!--<div class="activediv d-flex">
+     
+      <lottie-player src="mainmain.json" background="transparent" speed="1" loop="true" autoplay="true" mode="normal"></lottie-player></div>-->
+  
+  </div>
+
+  <div id="container" class="container"></div>
+  <!--<div class="activediv d-flex">
+
+     <lottie-player src="mainmain.json" background="transparent" speed="1" loop="true" autoplay="true" mode="normal"></lottie-player></div>-->
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.3.1/dist/lottie-player.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
+
+<script>
+
+            var jours = {
+                container: document.getElementById('lottieload'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'loader.json'
+              }
+          
+          anim = bodymovin.loadAnimation(jours);
+         
+anim.addEventListener("DOMLoaded", function(e) {
+             console.log("lottie is loaded");
+          setTimeout(function() {
+             
+           document.body.classList.remove("loading"); 
+           document.body.classList.add("loaded"); 
+          
+        
+          anim.destroy();
+          
+          }, 2000);
+        });
+
+
+  const progressContainer = document.querySelector('.progress-container');
+  const progress = Array.from(document.querySelectorAll('.progress'));
+  const myslide = Array.from(document.querySelectorAll('.activediv'));
+  const animations = Array.from(document.querySelectorAll('lottie-player'));
+  const jsons = Array(1, 2, 3, 4);
+  var animationIndex = Math.floor(Math.random() * jsons.length);
+  var elem1 = document.getElementById('container')
+  var animationConfig = () => {
+    if (animationIndex >= jsons.length) {
+      animationIndex = 0;
+    }
+    return {
+      container: elem1,
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,   /*MAKE SURE THIS IS FALSE*/
+      rendererSettings: {
+        progressiveLoad: false
+      },
+      path: 'mainmain_v' + jsons[animationIndex++] + '.json',
+      name: 'main',
+    };
+  };
+
+  var anim1 = null;
+  const loadAnimation = () => {
+    if (anim1) {
+      anim1.destroy()
+    }
+    anim1 = bodymovin.loadAnimation(animationConfig());
+    anim1.goToAndPlay(1, true);
+    //anim1.setSpeed(0.89);
+
+    anim1.addEventListener("complete", onAnimationComplete);
+  };
+
+  const onAnimationComplete = () => {
+    animationCompleted = true;
+    loadAnimation();
+  };
+
+  loadAnimation();
+
+  const playNext = (e) => {
+    const current = e && e.target;
+
+    let next;
+    let nextslide;
+    if (current) {
+
+      const currentIndex = progress.indexOf(current);
+      const activediv = myslide[currentIndex];
+      if (currentIndex < progress.length) {
+        next = progress[currentIndex + 1];
+        nextslide = myslide[currentIndex + 1];
+      }
+      current.classList.remove('active');
+      current.classList.add('passed');
+      activediv.classList.remove('d-flex');
+      activediv.classList.add('d-none');
+    }
+
+    if (!next) {
+      myslide.map((ele) => {
+        ele.classList.remove('d-flex');
+        ele.classList.remove('passed');
+      })
+
+      progress.map((el) => {
+        el.classList.remove('active');
+        el.classList.remove('passed');
+      })
+
+      nextslide = myslide[0];
+      next = progress[0];
+
+    }
+    next.classList.add('active');
+    nextslide.classList.add('d-flex');
+
+  }
+
+  
+
+const clickHandler = (e) => {
+  const index = Math.floor(e.offsetX / (progressContainer.clientWidth/progress.length));
+  
+  
+  const current = e && e.target.children[0];
+
+
+  let next;
+let nextslide;
+
+
+  //console.log('target:', e.target.getAttribute('data-slide'));
+   
+      
+
+      
+    animationCompleted = false;
+
+
+
+    const slideindex=e.target.getAttribute('data-slide');
+   
+
+if (slideindex==1){
+  anim1.goToAndPlay(0, true);  
+  progress[0].classList.remove('passed');
+  progress[0].classList.add('active');
+
+  myslide[0].classList.add('d-flex');
+
+for(i=1; i<progress.length; i++){
+
+  progress[i].classList.remove('passed');
+  progress[i].classList.remove('active');
+  myslide[i].classList.remove('d-flex');
+  myslide[i].classList.add('d-none');
+ 
+}
+  
+}
+
+else if(slideindex==2){
+  anim1.goToAndPlay(160, true);
+  
+  progress[1].classList.remove('passed');
+  progress[1].classList.add('active');
+
+
+  myslide[0].classList.add('d-none');
+  myslide[0].classList.remove('d-flex');
+
+  myslide[1].classList.add('d-flex');
+  myslide[1].classList.remove('d-none');
+
+  progress[0].classList.add('passed');
+  progress[0].classList.remove('active');
+for(i=2; i<progress.length; i++){
+
+  progress[i].classList.remove('passed');
+  progress[i].classList.remove('active');
+
+  myslide[i].classList.add('d-none');
+  myslide[i].classList.remove('d-flex');
+}
+
+
+}
+
+
+else if(slideindex==3){
+
+  anim1.goToAndPlay(315, true);  
+
+  progress[2].classList.remove('passed');
+  progress[2].classList.add('active');
+  myslide[2].classList.add('d-flex');
+  myslide[2].classList.remove('d-none');
+
+  progress[0].classList.add('passed');
+  progress[1].classList.add('passed');
+
+  progress[0].classList.remove('active');
+  progress[1].classList.remove('active');
+
+  myslide[0].classList.add('d-none');
+  myslide[1].classList.add('d-none');
+
+  myslide[0].classList.remove('d-flex');
+  myslide[1].classList.remove('d-flex');
+
+for(i=3; i<progress.length; i++){
+
+  progress[i].classList.remove('passed');
+  progress[i].classList.remove('active');
+
+  myslide[i].classList.add('d-none');
+  myslide[i].classList.remove('d-flex');
+}
+
+
+
+}
+else if(slideindex==4){
+  anim1.goToAndPlay(415, true);  
+
+
+  progress[3].classList.remove('passed');
+  progress[3].classList.add('active');
+  myslide[3].classList.add('d-flex');
+  myslide[3].classList.remove('d-none');
+
+  progress[0].classList.add('passed');
+  progress[1].classList.add('passed');
+  progress[2].classList.add('passed');
+  progress[0].classList.remove('active');
+  progress[1].classList.remove('active');
+  progress[2].classList.remove('active');
+
+
+  myslide[0].classList.add('d-none');
+  myslide[1].classList.add('d-none');
+  myslide[2].classList.add('d-none');
+
+  myslide[0].classList.remove('d-flex');
+  myslide[1].classList.remove('d-flex');
+  myslide[2].classList.remove('d-flex');
+ 
+
+}
+
+
+}
+
+  progress.map(el => el.addEventListener("animationend", playNext, false));
+  progress.map(el => el.addEventListener("click", clickHandler, false));
+
+progress.map(el => el.addEventListener("animationend", playNext, false));
+progress.map(el=> el.parentElement.addEventListener("click", clickHandler, false));
+
+</script>
+
+</body>
+</html>
